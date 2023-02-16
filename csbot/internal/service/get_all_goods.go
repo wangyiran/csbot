@@ -22,7 +22,7 @@ func (s Service) GetAllGoodsInfoFromPlatform() {
 	for index := 0; index < len(c5Items); index++ {
 		_, okuu := uuMP[c5Items[index].Gname]
 		_, okbuff := buffMP[c5Items[index].Gname]
-		if !okbuff || !okuu {
+		if !okbuff && !okuu {
 			continue
 		}
 		c5Price, _ := strconv.ParseFloat(c5Items[index].CnyPrice, 64)

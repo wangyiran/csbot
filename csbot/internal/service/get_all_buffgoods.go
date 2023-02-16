@@ -35,7 +35,7 @@ type BuffItem struct {
 func (s *Service) GetAllBuffGoods() []BuffItem {
 
 	BuffItems := make([]BuffItem, 0, 20000)
-
+	return BuffItems
 	_, pages, err := s.GetBuffItemsByPage(1)
 	if err != nil {
 		fmt.Printf("get Buff items list pages err , err:(%s)\n", err.Error())

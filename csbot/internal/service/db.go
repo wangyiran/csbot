@@ -46,6 +46,23 @@ func (s *Service) InsertItemList(infos []ItemInfo) error {
 	return nil
 }
 
+func (s *Service) InsertHotItemList(infos []HotItemInfo) error {
+	fmt.Printf("ready to insert hot item info , count:(%d)\n", len(infos))
+	tx := s.db.Begin()
+	if tx.Error != nil {
+		return tx.Error
+	}
+	defer tx.Rollback()
+
+	if err := tx.Table("hot_items").Create(infos).Error; err != nil {
+		fmt.Printf("insert hot item info err, err:(%s)\n", err.Error())
+		return err
+	}
+	fmt.Printf("insert hot item info success\n")
+	tx.Commit()
+	return nil
+}
+
 func (s *Service) GetCompleteItemListFromDB() (infos []ItemInfo) {
 	var rows []ItemInfo
 	err := s.db.Table("items_list").Where("c5_price > 20 and c5_price < 2000").Find(&rows).Error

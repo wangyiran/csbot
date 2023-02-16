@@ -8,6 +8,7 @@ func main() {
 	//fmt.Println("11")
 	s := service.New()
 	//s.GetAllGoodsInfoFromPlatform()
-	s.Analyse()
-
+	//s.Analyse()
+	ItemInfos := s.GetCompleteItemListFromDB()
+	s.FilterHotItems(ItemInfos)
 }
