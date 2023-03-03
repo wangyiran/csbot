@@ -3,6 +3,7 @@ module csbot
 go 1.18
 
 require (
+	github.com/robfig/cron v1.2.0
 	gorm.io/driver/mysql v1.4.6
 	gorm.io/gorm v1.24.5
 )

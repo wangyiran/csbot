@@ -72,3 +72,29 @@ func (s *Service) GetCompleteItemListFromDB() (infos []ItemInfo) {
 	}
 	return rows
 }
+
+func (s *Service) GetHotItemListFromDB() (infos []HotItemInfo) {
+	var rows []HotItemInfo
+	err := s.db.Table("hot_items").Where("c5_sell > 20 and c5_sell < 3000").Find(&rows).Error
+	if err != nil || len(rows) == 0 {
+		fmt.Printf("get items list err:(%s)\n", err.Error())
+		return rows
+	}
+	return rows
+}
+
+func (s *Service) DeleteOldHotItemsList() error {
+	tx := s.db.Begin()
+	if tx.Error != nil {
+		return tx.Error
+	}
+	defer tx.Rollback()
+
+	if err := tx.Exec("DELETE FROM hot_items").Error; err != nil {
+		fmt.Printf("DeleteOldHotItemsList err, err:(%s)\n", err.Error())
+		return err
+	}
+	fmt.Printf("DeleteOldHotItemsList success\n")
+	tx.Commit()
+	return nil
+}

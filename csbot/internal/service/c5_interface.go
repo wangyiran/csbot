@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -41,6 +42,24 @@ type C5PurchaseGoodInfo struct {
 	Gid           string  `json:"itemId"`
 	Gname         string  `json:"itemName"`
 	PurchasePrice float32 `json:"cnyPrice"`
+}
+
+func (s *Service) GetC5LowestSellPrice(gid string) (float32, error) {
+	_, infos, err := s.GetC5SellData(gid)
+	if len(infos) == 0 {
+		return 1, err
+	}
+	num64, err := strconv.ParseFloat(infos[0].SellPrice, 32)
+	num := float32(num64)
+	return num, err
+}
+
+func (s *Service) GetC5LowestPurchasePrice(gid string) (float32, error) {
+	_, infos, err := s.GetC5PurchaseData(gid)
+	if len(infos) == 0 {
+		return 1, err
+	}
+	return infos[0].PurchasePrice, err
 }
 
 func (s *Service) GetC5SellData(gid string) (int, []C5SellGoodInfo, error) {
