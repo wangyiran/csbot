@@ -46,7 +46,7 @@ func (s *Service) GetAllBuffGoods() []BuffItem {
 	for page := 1; page <= pages; page++ {
 		items, _, err := s.GetBuffItemsByPage(page)
 		fmt.Printf("%d-", page)
-		slptm := 3000 + rand.Intn(1001)
+		slptm := 1000 + rand.Intn(1001)
 
 		time.Sleep(time.Duration(slptm) * time.Millisecond)
 		if err != nil {
